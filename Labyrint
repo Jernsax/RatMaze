@@ -1,0 +1,26 @@
+package labyrint;
+
+import java.awt.*;
+import javax.swing.*;
+
+
+
+
+/**
+ *
+ * @author Jernsax
+ */
+public class Labyrint extends JFrame{
+
+
+    
+    Labyrint() {
+        super("Labyrint");
+        setSize(1000,1000);
+        setResizable(false);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setVisible(true);
+    }
+    
+        
+}

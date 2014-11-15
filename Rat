@@ -1,0 +1,127 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package labyrint;
+
+import java.awt.Color;
+import javax.swing.JPanel;
+
+/**
+ *
+ * @author Jernsax
+ */
+public class Rat {
+
+    int positionX = 0;
+    int positionY = 0;
+    String retning = "s";
+
+    JPanel ratAvatar = new JPanel();
+        
+    public Rat (int typeOfRat){
+        ratType = typeOfRat;
+    }    
+    
+    int ratType;
+    
+    public void placeRat(boolean[][] mazeInput) {
+        for (int k = 0; k < 10; k++) {
+            if (mazeInput[k][0] == false) {
+                positionX = k;
+            } else {
+
+            }
+        }
+        System.out.println("Ratposition is: " + positionX + ", " + positionY);
+    }
+
+    public void autoMove(boolean[][] mazeInput, Rat ratToMove) {
+        System.out.println("Rat position: " + positionX + " " + positionY);
+        try{
+            if(ratToMove.ratType == 1){
+            wallHugger(mazeInput, ratToMove);}
+            
+        } catch (ArrayIndexOutOfBoundsException e){
+            System.out.println("ArrayIndexOutOfBounds Exeption");
+        }
+    }
+
+private void wallHugger(boolean[][] mazeInput, Rat ratToMove) {
+        System.out.println("Rat is moving! Its position is: " + ratToMove.positionX + " " + ratToMove.positionY);
+// False er et ledigt felt, hvor true er en væg
+//
+        switch (ratToMove.retning) {
+            case "n":
+// Drej mod W
+                if (mazeInput[ratToMove.positionX - 1][ratToMove.positionY] == false) {
+                    ratToMove.positionX = ratToMove.positionX - 1;
+                    ratToMove.retning = "e";
+                } // fortsæt mod S
+                else if (mazeInput[ratToMove.positionX][ratToMove.positionY + 1] == false) {
+                    ratToMove.positionY = ratToMove.positionY + 1;
+                } // rammer væg og følger den mod E
+                else if (mazeInput[ratToMove.positionX][ratToMove.positionY + 1] == true) {
+                    ratToMove.retning = "w";
+                } else {
+                }
+                break;
+            case "e":
+// Drej mod N
+                if (mazeInput[ratToMove.positionX][ratToMove.positionY - 1] == false) {
+                    ratToMove.positionY = ratToMove.positionY - 1;
+                    ratToMove.retning = "s";
+                } // fortsæt mod W
+                else if (mazeInput[ratToMove.positionX - 1][ratToMove.positionY] == false) {
+                    ratToMove.positionX = ratToMove.positionX - 1;
+                } // rammer væg og følger den mod S
+                else if (mazeInput[ratToMove.positionX - 1][ratToMove.positionY] == true) {
+                    ratToMove.retning = "n";
+                } else {
+                }
+                break;
+            case "s":
+// Drej mod E
+                if (mazeInput[ratToMove.positionX + 1][ratToMove.positionY] == false) {
+                    ratToMove.positionX = ratToMove.positionX + 1;
+                    ratToMove.retning = "w";
+                } // fortsæt mod N
+                else if (mazeInput[ratToMove.positionX][ratToMove.positionY - 1] == false) {
+                    ratToMove.positionY = ratToMove.positionY - 1;
+                } // rammer væg og følger den mod W
+                else if (mazeInput[ratToMove.positionX][ratToMove.positionY - 1] == true) {
+                    ratToMove.retning = "e";
+                } else {
+                }
+                break;
+            case "w":
+// Drej mod S
+                if (mazeInput[ratToMove.positionX][ratToMove.positionY + 1] == false) {
+                    ratToMove.positionY = ratToMove.positionY + 1;
+                    ratToMove.retning = "n";
+                } // fortsæt mod E
+                else if (mazeInput[ratToMove.positionX + 1][ratToMove.positionY] == false) {
+                    ratToMove.positionX = ratToMove.positionX + 1;
+                } // rammer væg og følger den mod N
+                else if (mazeInput[ratToMove.positionX + 1][ratToMove.positionY] == true) {
+                    ratToMove.retning = "s";
+                } else {
+                }
+                break;
+        }
+    }
+    
+        public JPanel paintRat(Labyrint l, Rat ratToMove){
+        
+        ratAvatar.setBackground(Color.YELLOW);
+        
+        ratAvatar.setSize(50,50);
+        ratAvatar.setLocation(ratToMove.positionY + 1,ratToMove.positionX + 1);
+        
+        ratAvatar.setVisible(true);
+        
+        return ratAvatar;
+    }
+
+}

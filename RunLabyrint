@@ -1,0 +1,52 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package labyrint;
+
+import java.awt.Component;
+
+/**
+ *
+ * @author Jernsax
+ */
+public class RunLabyrint {
+
+    public static void main(String[] args) {
+        LGrid lg = new LGrid();
+        lg.GridButton();
+        Labyrint l = new Labyrint();
+
+        Rat Wallhugger = new Rat(1);
+        System.out.println("Rat start position: " + Wallhugger.positionX + ", " + Wallhugger.positionY);
+        Wallhugger.placeRat(lg.mazeArray);
+
+        l.add((Component) Wallhugger.paintRat(l, Wallhugger));
+        l.add((Component) lg.GridButton());
+
+        ratMove(Wallhugger, lg.mazeArray, l);
+
+    }
+
+    private static void ratMove(Rat ratToMove, boolean[][] mazeInput, Labyrint l) {
+        boolean stopLoop = true;
+// Kører et loop der flytter instancen af Rat, som stopper når rotten når exit
+        while (stopLoop) {
+            ratToMove.paintRat(l, ratToMove);
+            
+            if (ratToMove.positionX == 9) {
+                System.out.println("Rat found the exit! It is at: "
+                        + ratToMove.positionX + " " + ratToMove.positionY);
+                stopLoop = false;
+            } else {
+                ratToMove.autoMove(mazeInput, ratToMove);
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    System.out.println("Loop interrupted");
+                }
+            }
+        }
+    }
+}
